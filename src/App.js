@@ -34,7 +34,7 @@ class App extends Component {
     this.socket.on('next',(message_from_server)=>console.log(message_from_server))
 
     this.socket.on('connect', () => {
-      this.setState({isConnected:true})
+      this.setState({isConnected:true, id: this.socket.id})
     })
     // this.socket.on('pong!',(additionalStuff)=>{
     //   console.log('server answered!', additionalStuff)
@@ -58,7 +58,6 @@ class App extends Component {
     return (<div className="App">
       <div>status: {this.state.isConnected ? 'connected' : 'disconnected'}</div>
       {/* add: */}
-      <div>id: {this.state.id}</div>
       <div>Connected:  </div>
       {this.state.old_messages.map(item => (
             <ul>
@@ -70,14 +69,14 @@ class App extends Component {
             {/* <div>number of connections: {this.state.peeps.length}</div>
       <button onClick={()=>this.socket.emit('ping!')}>ping</button> */}
       {/* and also add: */}
-      <button onClick={()=>this.socket.emit('whoami')}>Who am I?</button>
+      {/* <button onClick={()=>this.socket.emit('whoami')}>Who am I?</button> */}
       {/* <button onClick={()=>this.socket.emit("give me next")}>Give me next</button>
       <button onClick={() => this.socket.emit("hint:addition")}> add </button> */}
       <input type={String}  onChange={(e)=>{this.setState(prevState => ({
   message: {                   
       ...prevState.message,   
       text:   e.target.value,
-      // id: this.state.id     
+      id: this.state.id     
   }
 }))}}></input>
       <button onClick={()=>this.socket.emit('message', this.state.message)}>Message</button>    
